@@ -33,6 +33,8 @@ const pl = {
       invalidUser: 'Błędne hasło lub nazwa użykownika',
       error: 'niespodziewany błąd',
       changePassword: 'Zmień Hasło',
+      changePasswordDesc:
+        'Dla bezpieczeństwa Twojego urządzenia, proszę zmień hasło do logowania w sieci.',
       differentPassword: 'hasła nie zgadzają się',
       illegalUsername: 'nazwa użytkownika zawiera niedozwolone znaki',
       illegalPassword: 'hasło zawiera niedozwolone znaki',
@@ -43,9 +45,11 @@ const pl = {
       reset3: '2. Usuń ten plik z urządzenia: ',
       reset4: '3. Użyj domyślnego login aby zalogować: ',
       ok: 'Ok',
-      cancel: 'Anuluj'
+      cancel: 'Anuluj',
+      loginButtonText: 'Zaloguj się'
     },
     screen: {
+      video: 'Tryb wideo',
       resolution: 'Rozdzielczość',
       auto: 'Automatyczny',
       autoTips:
@@ -53,6 +57,10 @@ const pl = {
       fps: 'FPS',
       customizeFps: 'Personalizuj',
       quality: 'Jakość',
+      qualityLossless: 'Bezstratny',
+      qualityHigh: 'Wysoki',
+      qualityMedium: 'Średni',
+      qualityLow: 'Niski',
       frameDetect: 'Wykrywanie klatek',
       frameDetectTip:
         'Obliczanie różnicy między klatkami. Zatrzymaj transmisję strumienia wideo, gdy na ekranie zdalnego hosta nie zostaną wykryte żadne zmiany.'

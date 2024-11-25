@@ -28,10 +28,13 @@ const cz = {
       placeholderPassword2: 'Zadejte prosím heslo znovu',
       noEmptyUsername: 'Uživatelské jméno nesmí být prázdné',
       noEmptyPassword: 'Heslo nesmí být prázdné',
-      noAccount: 'Nepodařilo se získat informace o uživateli, prosím obnovte stránku nebo resetujte heslo',
+      noAccount:
+        'Nepodařilo se získat informace o uživateli, prosím obnovte stránku nebo resetujte heslo',
       invalidUser: 'Neplatné uživatelské jméno nebo heslo',
       error: 'Neočekávaná chyba',
       changePassword: 'Změnit heslo',
+      changePasswordDesc:
+        'Pro bezpečnost vašeho zařízení prosím změňte heslo pro přihlášení na webu.',
       differentPassword: 'Hesla se neshodují',
       illegalUsername: 'Uživatelské jméno obsahuje nepovolené znaky',
       illegalPassword: 'Heslo obsahuje nepovolené znaky',
@@ -42,9 +45,11 @@ const cz = {
       reset3: '2. Smažte soubor v zařízení: ',
       reset4: '3. Přihlaste se pomocí výchozího účtu: ',
       ok: 'OK',
-      cancel: 'Zrušit'
+      cancel: 'Zrušit',
+      loginButtonText: 'Přihlášení'
     },
     screen: {
+      video: 'Režim videa',
       resolution: 'Rozlišení',
       auto: 'Automatické',
       autoTips:
@@ -52,6 +57,10 @@ const cz = {
       fps: 'FPS',
       customizeFps: 'Přizpůsobit',
       quality: 'Kvalita',
+      qualityLossless: 'Bezeztrátový',
+      qualityHigh: 'Vysoký',
+      qualityMedium: 'Střední',
+      qualityLow: 'Nízký',
       frameDetect: 'Detekce snímků',
       frameDetectTip:
         'Vypočítá rozdíl mezi snímky. Přenos video streamu se zastaví, pokud nejsou detekovány změny na obrazovce vzdáleného hostitele.'
@@ -73,7 +82,8 @@ const cz = {
       mode: 'Režim myši',
       absolute: 'Absolutní režim',
       relative: 'Relativní režim',
-      requestPointer: 'Používá se relativní režim. Klikněte prosím na plochu pro získání kurzoru myši.',
+      requestPointer:
+        'Používá se relativní režim. Klikněte prosím na plochu pro získání kurzoru myši.',
       resetHid: 'Resetovat HID'
     },
     image: {
@@ -165,7 +175,8 @@ const cz = {
       upTailscale: 'Nahrajte Tailscale do adresáře NanoKVM /usr/bin/',
       upTailscaled: 'Nahrajte Tailscaled do adresáře NanoKVM /usr/sbin/',
       refresh: 'Obnovit stránku',
-      notLogin: 'Zařízení nebylo dosud spárováno. Přihlaste se prosím a spárujte toto zařízení s vaším účtem.',
+      notLogin:
+        'Zařízení nebylo dosud spárováno. Přihlaste se prosím a spárujte toto zařízení s vaším účtem.',
       urlPeriod: 'Tento odkaz je platný po dobu 10 minut',
       login: 'Přihlášení',
       loginSuccess: 'Přihlášení úspěšné',

@@ -32,6 +32,7 @@ const zh = {
       invalidUser: '用户名或密码错误',
       error: '未知错误',
       changePassword: '修改密码',
+      changePasswordDesc: '为了您的设备安全，请修改网页登录密码。',
       differentPassword: '两次密码不一致',
       illegalUsername: '用户名中包含非法字符',
       illegalPassword: '密码中包含非法字符',
@@ -42,9 +43,11 @@ const zh = {
       reset3: '2. 删除设备中的文件：',
       reset4: '3. 使用默认的账号登录： ',
       ok: '确定',
-      cancel: '取消'
+      cancel: '取消',
+      loginButtonText: '登录'
     },
     screen: {
+      video: '视频模式',
       resolution: '分辨率',
       auto: '自动',
       autoTips:
@@ -52,6 +55,10 @@ const zh = {
       fps: '帧率',
       customizeFps: '自定义',
       quality: '图像质量',
+      qualityLossless: '无损',
+      qualityHigh: '高',
+      qualityMedium: '中',
+      qualityLow: '低',
       frameDetect: '帧差检测',
       frameDetectTip: '计算帧之间的差异，当检测到远程主机画面不变时，停止传输视频流'
     },

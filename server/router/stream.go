@@ -2,17 +2,19 @@ package router
 
 import (
 	"NanoKVM-Server/middleware"
-	"NanoKVM-Server/service/stream"
+	"NanoKVM-Server/service/stream/h264"
+	"NanoKVM-Server/service/stream/mjpeg"
+
 	"github.com/gin-gonic/gin"
 )
 
 func streamRouter(r *gin.Engine) {
-	service := stream.NewService()
 	api := r.Group("/api").Use(middleware.CheckToken())
 
-	api.GET("/stream/mjpeg", service.Mjpeg) // mjpeg stream
+	api.GET("/stream/mjpeg", mjpeg.Connect)                      // mjpeg stream
+	api.GET("/stream/mjpeg/detect", mjpeg.GetFrameDetect)        // get frame detect state
+	api.POST("/stream/mjpeg/detect", mjpeg.UpdateFrameDetect)    // update frame detect state
+	api.POST("/stream/mjpeg/detect/stop", mjpeg.StopFrameDetect) // temporary stop frame detect
 
-	api.GET("/stream/mjpeg/detect", service.GetFrameDetect)        // get frame detect state
-	api.POST("/stream/mjpeg/detect", service.UpdateFrameDetect)    // update frame detect state
-	api.POST("/stream/mjpeg/detect/stop", service.StopFrameDetect) // temporary stop frame detect
+	api.GET("/stream/h264", h264.Connect) // h264 stream
 }

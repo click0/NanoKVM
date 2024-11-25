@@ -2,15 +2,18 @@ package router
 
 import (
 	"fmt"
-	"github.com/gin-gonic/contrib/static"
-	"github.com/gin-gonic/gin"
 	"os"
 	"path/filepath"
+
+	"github.com/gin-gonic/contrib/static"
+	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func Init(r *gin.Engine) {
 	web(r)
 	server(r)
+	log.Debugf("router init done")
 }
 
 func web(r *gin.Engine) {

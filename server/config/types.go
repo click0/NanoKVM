@@ -4,9 +4,16 @@ type Config struct {
 	Protocol       string `yaml:"proto"`
 	Port           Port   `yaml:"port"`
 	Cert           Cert   `yaml:"cert"`
-	Log            string `yaml:"logger"`
+	Logger         Logger `yaml:"logger"`
 	Authentication string `yaml:"authentication"`
 	SecretKey      string `yaml:"secretKey"`
+
+	Hardware Hardware `yaml:"-"`
+}
+
+type Logger struct {
+	Level string `yaml:"level"`
+	File  string `yaml:"file"`
 }
 
 type Port struct {
@@ -17,4 +24,12 @@ type Port struct {
 type Cert struct {
 	Crt string `yaml:"crt"`
 	Key string `yaml:"key"`
+}
+
+type Hardware struct {
+	Version      HWVersion `yaml:"-"`
+	GPIOReset    string    `yaml:"-"`
+	GPIOPower    string    `yaml:"-"`
+	GPIOPowerLED string    `yaml:"-"`
+	GPIOHDDLed   string    `yaml:"-"`
 }

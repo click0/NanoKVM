@@ -6,10 +6,13 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/spf13/viper"
+	"log"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/spf13/viper"
+	"gopkg.in/yaml.v3"
 )
 
 var (
@@ -17,95 +20,119 @@ var (
 	once   sync.Once
 )
 
-var defaultConfig = []byte(`proto: http
-port:
-  http: 80 
-  https: 443
-cert:
-  crt: server.crt
-  key: server.key
-`)
-
 func GetInstance() *Config {
-	once.Do(read)
+	once.Do(initialize)
 
 	return &config
 }
 
-func read() {
-	viper.SetConfigName("server")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("/etc/kvm/")
-
-	if err := viper.ReadInConfig(); err != nil {
+func initialize() {
+	if err := readByFile(); err != nil {
 		if errors.As(err, &viper.ConfigFileNotFoundError{}) {
 			create()
-			fmt.Printf("File /etc/kvm/server.yaml not exists. Use default configuration.\n")
-		} else {
-			fmt.Printf("Read file /etc/kvm/server.yaml failed. Use default configuration.\n")
 		}
+
+		if err = readByDefault(); err != nil {
+			log.Fatalf("Failed to read default configuration!")
+		}
+
+		log.Println("using default configuration")
+	}
+
+	if err := validate(); err != nil {
+		log.Fatalf("Failed to validate configuration!")
 	}
 
 	if err := viper.Unmarshal(&config); err != nil {
-		panic(fmt.Sprintf("Can't read configuration file /etc/kvm/nanokvm.yaml.\n%s", err))
+		log.Fatalf("Failed to parse configuration: %s", err)
 	}
 
-	validate()
+	if config.Authentication == "disable" {
+		log.Println("NOTICE: Authentication is disabled! Please ensure your service is secure!")
+	}
 
 	if config.SecretKey == "" {
 		config.SecretKey = generateRandomString()
 	}
 
-	if config.Authentication == "disable" {
-		fmt.Println("NOTICE: Authentication is disabled! Please ensure your service is secure!")
-	}
+	config.Hardware = getHardware()
 
-	fmt.Printf("load config success\n")
+	log.Println("config loaded successfully")
 }
 
+func readByFile() error {
+	viper.SetConfigName("server")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("/etc/kvm/")
+
+	return viper.ReadInConfig()
+}
+
+func readByDefault() error {
+	data, err := yaml.Marshal(defaultConfig)
+	if err != nil {
+		log.Printf("failed to marshal default config: %s", err)
+		return err
+	}
+
+	return viper.ReadConfig(bytes.NewBuffer(data))
+}
+
+// Create configuration file.
 func create() {
-	_ = os.MkdirAll("/etc/kvm", 0644)
+	var (
+		file *os.File
+		data []byte
+		err  error
+	)
 
-	file, err := os.OpenFile("/etc/kvm/server.yaml", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	_ = os.MkdirAll("/etc/kvm", 0o644)
+
+	file, err = os.OpenFile("/etc/kvm/server.yaml", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
-		fmt.Printf("open config failed: %s\n", err)
+		log.Printf("open config failed: %s", err)
 		return
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 
-	_, err = file.Write(defaultConfig)
-	if err != nil {
-		fmt.Printf("save config failed: %s\n", err)
+	if data, err = yaml.Marshal(defaultConfig); err != nil {
+		log.Printf("failed to marshal default config: %s", err)
 		return
 	}
 
-	err = file.Sync()
-	if err != nil {
-		fmt.Printf("sync config failed: %s\n", err)
+	if _, err = file.Write(data); err != nil {
+		log.Printf("failed to save config: %s", err)
 		return
 	}
+
+	if err = file.Sync(); err != nil {
+		log.Printf("failed to sync config: %s", err)
+		return
+	}
+
+	log.Println("create file /etc/kvm/server.yaml with default configuration")
 }
 
-func validate() {
-	if config.Port.Http > 0 && config.Port.Https > 0 {
-		return
+// Validate the configuration. This is to ensure compatibility with earlier versions.
+func validate() error {
+	if viper.GetInt("port.http") > 0 && viper.GetInt("port.https") > 0 {
+		return nil
 	}
 
 	_ = os.Remove("/etc/kvm/server.yaml")
+	log.Println("delete empty configuration file")
 
-	if err := viper.ReadConfig(bytes.NewBuffer(defaultConfig)); err != nil {
-		panic("load default config failed")
-	}
+	create()
 
-	if err := viper.Unmarshal(&config); err != nil {
-		panic("Can't read configuration file /etc/kvm/server.yaml.")
-	}
+	return readByDefault()
 }
 
+// Generate random string for secret key.
 func generateRandomString() string {
 	b := make([]byte, 64)
 	_, err := rand.Read(b)
-
 	if err != nil {
 		currentTime := time.Now().UnixNano()
 		timeString := fmt.Sprintf("%d", currentTime)
