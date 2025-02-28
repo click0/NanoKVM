@@ -28,7 +28,7 @@ const en = {
       placeholderPassword2: 'Please enter password again',
       noEmptyUsername: 'Username required',
       noEmptyPassword: 'Password required',
-      noAccount: 'Failed to get user information, please refresh web page or reset password',
+      noAccount: 'Failed to get user information, please refresh web page or reset the password',
       invalidUser: 'Invalid username or password',
       error: 'Unexpected error',
       changePassword: 'Change Password',
@@ -80,7 +80,7 @@ const en = {
       mode: 'Mouse mode',
       absolute: 'Absolute mode',
       relative: 'Relative mode',
-      requestPointer: 'Using relative mode. Please click desktop to get mouse pointer.',
+      requestPointer: 'Using relative mode. Please click on the desktop to get a mouse pointer.',
       resetHid: 'Reset HID'
     },
     image: {
@@ -113,7 +113,7 @@ const en = {
       runBackground: 'Run Background',
       runFailed: 'Run failed',
       attention: 'Attention',
-      delDesc: 'Are you sure to delete this file?',
+      delDesc: 'Are you sure you want to delete this file?',
       confirm: 'Yes',
       cancel: 'No',
       delete: 'Delete',
@@ -147,10 +147,10 @@ const en = {
     },
     update: {
       title: 'Check for Update',
-      queryFailed: 'Get version failed',
+      queryFailed: 'Getting the version failed',
       updateFailed: 'Update failed. Please retry.',
       isLatest: 'You already have the latest version.',
-      available: 'An update is available. Are you sure to update?',
+      available: 'An update is available. Would you like to update?',
       updating: 'Update started. Please wait...',
       confirm: 'Confirm',
       cancel: 'Cancel'
@@ -165,7 +165,7 @@ const en = {
       install: 'Install',
       installing: 'Installing',
       failed: 'Install failed',
-      retry: 'Please refresh and try again. Or try to install manually',
+      retry: 'Please refresh and try again, or try installing manually',
       download: 'Download the',
       package: 'installation package',
       unzip: 'and unzip it',
